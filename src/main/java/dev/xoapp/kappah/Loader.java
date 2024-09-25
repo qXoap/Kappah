@@ -8,6 +8,7 @@ import dev.xoapp.kappah.commands.KappahCommand;
 import dev.xoapp.kappah.data.PlayerData;
 import dev.xoapp.kappah.handlers.ItemHandler;
 import dev.xoapp.kappah.handlers.KappahHandler;
+import dev.xoapp.kappah.scheduler.KappahMode;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,6 +25,8 @@ public class Loader extends PluginBase {
         commands().forEach((key, command) -> {
             getServer().getCommandMap().register(key, command);
         });
+
+        getServer().getScheduler().scheduleRepeatingTask(new KappahMode(), 20);
 
         FormAPI.init(this);
     }
