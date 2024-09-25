@@ -27,10 +27,6 @@ public class Session {
     public Session(String name) {
         _name = name;
         load();
-
-        Server.getInstance().getScheduler().scheduleRepeatingTask(
-                new KappahMode(this), 20
-        );
     }
 
     public Boolean isNull() {
