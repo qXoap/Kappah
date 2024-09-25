@@ -33,7 +33,9 @@ public class ItemHandler implements Listener {
         PlayerInteractEvent.Action clickAir = PlayerInteractEvent.Action.RIGHT_CLICK_AIR;
         PlayerInteractEvent.Action clickBlock = PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK;
 
-        if (event.getAction() != clickAir && event.getAction() != clickBlock) { return; }
+        if (event.getAction() != clickAir && event.getAction() != clickBlock) {
+            return;
+        }
 
         assert item != null;
         String nbt = Objects.requireNonNull(item.getNamedTag()).getString("_kappah");
@@ -85,23 +87,22 @@ public class ItemHandler implements Listener {
 
         event.setCancelled();
 
-        if (nbt.equals("freeze")) {
-            String freezeMessage = String.format("&7Player &e%s &7was frozen by &a%s", i_player.getName(), player.getName());
-            String unFreezeMessage = String.format("&7Player &e%s &7was unfrozen by &a%s", i_player.getName(), player.getName());
+        switch (nbt) {
+            case "freeze" -> {
+                String freezeMessage = String.format("&7Player &e%s &7was frozen by &a%s", i_player.getName(), player.getName());
+                String unFreezeMessage = String.format("&7Player &e%s &7was unfrozen by &a%s", i_player.getName(), player.getName());
 
-            if (i_player.isImmobile()) {
-                i_player.setImmobile(false);
-                Server.getInstance().broadcastMessage(TextFormat.colorize(unFreezeMessage));
-                return;
+                if (i_player.isImmobile()) {
+                    i_player.setImmobile(false);
+                    Server.getInstance().broadcastMessage(TextFormat.colorize(unFreezeMessage));
+                    return;
+                }
+
+                i_player.setImmobile(true);
+                Server.getInstance().broadcastMessage(TextFormat.colorize(freezeMessage));
             }
 
-            i_player.setImmobile(true);
-            Server.getInstance().broadcastMessage(TextFormat.colorize(freezeMessage));
-            return;
-        }
-
-        if (nbt.equals("information")) {
-            Kappah.sendInformation(player, i_player);
+            case "information" -> Kappah.sendInformation(player, i_player);
         }
     }
 }
