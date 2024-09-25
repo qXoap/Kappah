@@ -19,7 +19,7 @@ public class FormFactory {
                 continue;
             }
 
-            form.addButton(i_player.getName(),i_player.getName() + "\nTap To Teleport");
+            form.addButton(i_player.getName(), i_player.getName() + "\nTap To Teleport");
         }
 
         form.addHandler((event) -> {
