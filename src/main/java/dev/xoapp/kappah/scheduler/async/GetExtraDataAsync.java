@@ -3,7 +3,7 @@ package dev.xoapp.kappah.scheduler.async;
 import cn.nukkit.Player;
 import cn.nukkit.Server;
 import cn.nukkit.scheduler.AsyncTask;
-import com.google.gson.Gson;
+import cn.nukkit.utils.JSONUtils;
 import dev.xoapp.kappah.Loader;
 
 import java.io.IOException;
@@ -16,16 +16,16 @@ import java.util.Map;
 
 public class GetExtraDataAsync extends AsyncTask {
 
-    private final Player _i_player;
+    private final Player target;
 
-    public GetExtraDataAsync(Player i_player) {
-        _i_player = i_player;
+    public GetExtraDataAsync(Player target) {
+        this.target = target;
     }
 
     @Override
     public void onRun() {
 
-        String address = _i_player.getAddress();
+        String address = target.getAddress();
 
         HttpClient client = HttpClient.newHttpClient();
 
@@ -42,7 +42,7 @@ public class GetExtraDataAsync extends AsyncTask {
                 return;
             }
 
-            Map<String, String> data = new Gson().fromJson(response.body(), HashMap.class);
+            Map<String, String> data = JSONUtils.from(response.body(), HashMap.class);
 
             Map<String, String> result = new HashMap<>();
             result.put("country", data.get("country"));
@@ -65,6 +65,6 @@ public class GetExtraDataAsync extends AsyncTask {
             return;
         }
 
-        Loader.getPlayerData().setData(_i_player.getName(), result);
+        Loader.getPlayerData().setData(target.getName(), result);
     }
 }

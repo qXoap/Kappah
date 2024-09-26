@@ -25,7 +25,6 @@ public class ItemHandler implements Listener {
         Item item = event.getItem();
 
         Session session = SessionFactory.getSession(player.getName());
-
         if (session == null) {
             return;
         }
@@ -57,21 +56,22 @@ public class ItemHandler implements Listener {
             case "unvanish" -> {
                 session.setVanish(false);
                 player.sendMessage(TextFormat.colorize("&aVanish successfully disabled"));
-                session.sendKit();
+                session.sendTools();
                 player.setAllowFlight(false);
             }
 
             case "teleport" -> player.showFormWindow(FormFactory.getTeleportForm(player));
+
+            default -> {}
         }
     }
 
     @EventHandler
     public void onPlayerHit(EntityDamageByEntityEvent event) {
-        Player i_player = (Player) event.getEntity();
+        Player opponent = (Player) event.getEntity();
         Player player = (Player) event.getDamager();
 
         Session session = SessionFactory.getSession(player.getName());
-
         if (session == null) {
             return;
         }
@@ -89,20 +89,22 @@ public class ItemHandler implements Listener {
 
         switch (nbt) {
             case "freeze" -> {
-                String freezeMessage = String.format("&7Player &e%s &7was frozen by &a%s", i_player.getName(), player.getName());
-                String unFreezeMessage = String.format("&7Player &e%s &7was unfrozen by &a%s", i_player.getName(), player.getName());
+                String freezeMessage = String.format("&7Player &e%s &7was frozen by &a%s", opponent.getName(), player.getName());
+                String unFreezeMessage = String.format("&7Player &e%s &7was unfrozen by &a%s", opponent.getName(), player.getName());
 
-                if (i_player.isImmobile()) {
-                    i_player.setImmobile(false);
+                if (opponent.isImmobile()) {
+                    opponent.setImmobile(false);
                     Server.getInstance().broadcastMessage(TextFormat.colorize(unFreezeMessage));
                     return;
                 }
 
-                i_player.setImmobile(true);
+                opponent.setImmobile(true);
                 Server.getInstance().broadcastMessage(TextFormat.colorize(freezeMessage));
             }
 
-            case "information" -> Kappah.sendInformation(player, i_player);
+            case "information" -> Kappah.sendInformation(player, opponent);
+
+            default -> {}
         }
     }
 }

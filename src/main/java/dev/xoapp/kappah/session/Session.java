@@ -2,44 +2,41 @@ package dev.xoapp.kappah.session;
 
 import cn.nukkit.Player;
 import cn.nukkit.Server;
-import cn.nukkit.entity.effect.Effect;
-import cn.nukkit.entity.effect.EffectType;
 import cn.nukkit.inventory.Inventory;
 import cn.nukkit.item.Item;
 import dev.xoapp.kappah.items.types.Freeze;
 import dev.xoapp.kappah.items.types.PlayerInformation;
 import dev.xoapp.kappah.items.types.Teleport;
 import dev.xoapp.kappah.items.types.Vanish;
-import dev.xoapp.kappah.scheduler.KappahMode;
+import lombok.Getter;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Session {
 
-    private final String _name;
+    @Getter private final String name;
 
     private Map<Integer, Item> inventoryContents;
 
-    private boolean _vanish = false;
+    @Getter private boolean vanish = false;
 
     public Session(String name) {
-        _name = name;
+        this.name = name;
         load();
     }
 
-    public Boolean isNull() {
-        return SessionFactory.getSession(_name) == null;
+    public boolean isNull() {
+        return SessionFactory.getSession(name) == null;
     }
 
     public Player getPlayer() {
-        return Server.getInstance().getPlayerExact(_name);
+        return Server.getInstance().getPlayerExact(name);
     }
 
     public void load() {
-        Player player = getPlayer();
 
+        Player player = getPlayer();
         if (player == null) {
             return;
         }
@@ -47,18 +44,13 @@ public class Session {
         saveInventories();
         player.getInventory().clearAll();
 
-        sendKit();
-    }
-
-    public Boolean isVanish() {
-        return _vanish;
+        sendTools();
     }
 
     public void setVanish(boolean value) {
-        _vanish = value;
+        vanish = value;
 
         Player player = getPlayer();
-
         if (player == null) {
             return;
         }
@@ -68,9 +60,9 @@ public class Session {
         }
     }
 
-    public void sendKit() {
-        Player player = getPlayer();
+    public void sendTools() {
 
+        Player player = getPlayer();
         if (player == null) {
             return;
         }
@@ -87,8 +79,8 @@ public class Session {
     }
 
     public void saveInventories() {
-        Player player = getPlayer();
 
+        Player player = getPlayer();
         if (player == null) {
             return;
         }
@@ -97,8 +89,8 @@ public class Session {
     }
 
     public void close() {
-        Player player = getPlayer();
 
+        Player player = getPlayer();
         if (player == null) {
             return;
         }

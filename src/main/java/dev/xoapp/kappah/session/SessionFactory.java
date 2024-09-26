@@ -7,19 +7,21 @@ import java.util.Map;
 
 public class SessionFactory {
 
-    private static final Map<String, Session> _sessions = new HashMap<>();
+    private static final Map<String, Session> sessions = new HashMap<>();
 
-    public static Map<String, Session> getSessions() { return _sessions; }
+    public static Map<String, Session> getSessions() {
+        return sessions;
+    }
 
     public static void register(Player player) {
-        _sessions.put(player.getName(), new Session(player.getName()));
+        sessions.put(player.getName(), new Session(player.getName()));
     }
 
     public static Session getSession(String name) {
-        return _sessions.get(name);
+        return sessions.get(name);
     }
 
     public static void unregister(String name) {
-        _sessions.remove(name);
+        sessions.remove(name);
     }
 }

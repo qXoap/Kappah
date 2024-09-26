@@ -13,31 +13,29 @@ public class KappahMode extends Task {
 
     @Override
     public void onRun(int i) {
-        for (Session _session : SessionFactory.getSessions().values()) {
-            Player player = _session.getPlayer();
+        for (Session session : SessionFactory.getSessions().values()) {
+            Player player = session.getPlayer();
 
             if (player == null) {
                 getHandler().cancel();
                 return;
             }
 
-            if (_session.isNull()) {
+            if (session.isNull()) {
                 getHandler().cancel();
                 return;
             }
 
-            if (_session.isVanish()) {
+            if (session.isVanish()) {
                 player.addEffect(Effect.get(EffectType.INVISIBILITY).setVisible(false));
                 player.addEffect(Effect.get(EffectType.NIGHT_VISION).setVisible(false));
             }
-
-            String isVanish = _session.isVanish() ? "&aEnabled" : "&cDisabled";
 
             String tipMessage = String.format(
                     "&fOnline: &e%s &7| &fTPS: &e%s &7| &fVanish: &r%s",
                     Server.getInstance().getOnlinePlayers().size(),
                     Server.getInstance().getTicksPerSecond(),
-                    isVanish
+                    (session.isVanish() ? "&aEnabled" : "&cDisabled")
             );
 
             player.sendTip(TextFormat.colorize(tipMessage));

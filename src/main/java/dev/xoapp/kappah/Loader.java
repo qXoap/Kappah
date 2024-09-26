@@ -9,16 +9,20 @@ import dev.xoapp.kappah.data.PlayerData;
 import dev.xoapp.kappah.handlers.ItemHandler;
 import dev.xoapp.kappah.handlers.KappahHandler;
 import dev.xoapp.kappah.scheduler.KappahMode;
+import lombok.Getter;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class Loader extends PluginBase {
 
+    @Getter private static Loader instance;
+
     @Override
     public void onEnable() {
+        instance = this;
 
-        getServer().getPluginManager().registerEvents(new EventHandler(), this);
+        getServer().getPluginManager().registerEvents(new EventListener(), this);
         getServer().getPluginManager().registerEvents(new KappahHandler(), this);
         getServer().getPluginManager().registerEvents(new ItemHandler(), this);
 
@@ -43,10 +47,6 @@ public class Loader extends PluginBase {
         commands.put("staff", new KappahCommand());
 
         return commands;
-    }
-
-    public static Loader getInstance() {
-        return new Loader();
     }
 
     public static PlayerData getPlayerData() {

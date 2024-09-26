@@ -10,23 +10,23 @@ import java.util.Map;
 
 public class PlayerData {
 
-    private final Config _config;
+    private final Config config;
 
     public PlayerData() {
         File file = new File(Loader.getInstance().getDataFolder() + "kappah/players.json");
-        _config = new Config(file, Config.JSON);
+        config = new Config(file, Config.JSON);
     }
 
     public void setData(String key, Object data) {
-        _config.set(key, data);
-        _config.save();
+        config.set(key, data);
+        config.save();
     }
 
     public Object getData(String key) {
-        return _config.get(key);
+        return config.get(key);
     }
 
     public Map<String, Object> getSavedData() {
-        return _config.getAll();
+        return config.getAll();
     }
 }

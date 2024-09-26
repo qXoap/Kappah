@@ -18,8 +18,8 @@ public class KappahHandler implements Listener {
     @EventHandler
     public void onPlayerDrop(PlayerDropItemEvent event) {
         Player player = event.getPlayer();
-        Session session = SessionFactory.getSession(player.getName());
 
+        Session session = SessionFactory.getSession(player.getName());
         if (session == null) {
             return;
         }
@@ -30,8 +30,8 @@ public class KappahHandler implements Listener {
     @EventHandler
     public void onPlayerExhaust(PlayerFoodLevelChangeEvent event) {
         Player player = event.getPlayer();
-        Session session = SessionFactory.getSession(player.getName());
 
+        Session session = SessionFactory.getSession(player.getName());
         if (session == null) {
             return;
         }
@@ -41,14 +41,13 @@ public class KappahHandler implements Listener {
 
     @EventHandler
     public void onPlayerPickup(InventoryPickupItemEvent event) {
-        InventoryHolder holder = event.getInventory().getHolder();
 
+        InventoryHolder holder = event.getInventory().getHolder();
         if (!(holder instanceof Player player)) {
             return;
         }
 
         Session session = SessionFactory.getSession(player.getName());
-
         if (session == null) {
             return;
         }
@@ -58,14 +57,13 @@ public class KappahHandler implements Listener {
 
     @EventHandler
     public void onPlayerDamage(EntityDamageEvent event) {
-        Entity entity = event.getEntity();
 
+        Entity entity = event.getEntity();
         if (!(entity instanceof Player player)) {
             return;
         }
 
         Session session = SessionFactory.getSession(player.getName());
-
         if (session == null) {
             return;
         }
@@ -75,14 +73,13 @@ public class KappahHandler implements Listener {
 
     @EventHandler
     public void onSlotChange(InventoryMoveItemEvent event) {
-        InventoryHolder holder = event.getInventory().getHolder();
 
+        InventoryHolder holder = event.getInventory().getHolder();
         if (!(holder instanceof Player player)) {
             return;
         }
 
         Session session = SessionFactory.getSession(player.getName());
-
         if (session == null) {
             return;
         }
